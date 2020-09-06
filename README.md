@@ -208,7 +208,7 @@ setLabelText(labelText) {
 
 * Elemento React(JSX)
     * component
-    * container
+    * container (páginas), equiv. ao views no VueJS.
 
 * Array ou fragmento (V. 16)
     * Antes deve retornar um single child
@@ -220,10 +220,18 @@ setLabelText(labelText) {
 
 * Render não pode modificar o state do component.
 
-Pra chamar uma API use o ComponentDidMount()
+Pra chamar uma API use o componentDidMount()
 
 
-### ComponentDidMount
+### componentDidMount
+
+Ordem de execução:
+
+* constructor
+* render
+* componentDidMount
+
+![mounting.png](img/mounting.png)
 
 #### Listeners
 
@@ -242,6 +250,54 @@ Pode usar o this.setState()
 Melhor lugar pra remover os Listeners.
 
 
+Instalar axios
+
+```
+npm install axios
+```
+
+```js
+#App.js
+
+import React, { Component } from 'react';
+import axios from 'axios';
+import './App.css';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: []
+    }
+  }
+
+  componentDidMount() {
+    axios.get('https://api.github.com/repositories')
+      .then(({ data }) => {
+        this.setState({ data })
+      })
+  }
+
+  render() {
+    const { data } = this.state
+
+    return (
+      <div className="App">
+        <ul>
+          {data.map(
+            item => <li>{ item.full_name }</li>
+          )}
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+
 
 ## React Hooks
 
@@ -257,7 +313,7 @@ Basicamente faz tudo via componentes, via funções.
 
 #### useEffect
 
-É equivalente ao `ComponentDidMount`.
+É equivalente ao `componentDidMount`.
 
 
 
