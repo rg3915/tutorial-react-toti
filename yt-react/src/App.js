@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { listRepositories } from './api/github';
 import './App.css';
+
+import { listRepositories } from './api/github';
+import Item from './components/Item';
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class App extends Component {
       <div className="App">
         <ul>
           {data.map(
-            item => <li>{ item.full_name }</li>
+            item => <Item key={item.id} {...item} />
           )}
         </ul>
       </div>

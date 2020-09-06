@@ -330,6 +330,54 @@ class App extends Component {
   }
 ```
 
+### Criando componentes
+
+Vamos criar alguns componentes
+
+```
+mkdir components
+touch components/Item.jsx
+```
+
+```js
+# components/Item.jsx
+import React from 'react';
+
+const Item = ({ id, full_name }) => (
+  <li key={id}>{full_name}</li>
+)
+
+export default Item
+```
+
+```js
+#App.js
+
+import Item from './components/Item';
+
+...
+<ul>
+  {data.map(
+    item => <Item key={item.id} {...item} />
+  )}
+</ul>
+...
+```
+
+Repare em
+
+```js
+import { listRepositories } from './api/github';
+import Item from './components/Item';
+```
+
+
+que o primeiro tem chaves e o segundo não. No segundo, sempre que tiver um `export default`, daí não precisa de chaves ao importar.
+
+
+
+
+
 
 
 ## React Hooks
