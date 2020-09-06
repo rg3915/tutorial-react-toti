@@ -297,6 +297,39 @@ class App extends Component {
 export default App;
 ```
 
+## Refatorando o projeto
+
+Criar uma pasta `api` dentro da pasta `src`:
+
+```
+mkdir api
+touch api/github.js
+```
+
+```js
+# github.js
+import axios from 'axios'
+
+export const listRepositories = () => 
+  axios.get('https://api.github.com/repositories')
+    .then(({ data }) => data)
+```
+
+```js
+# App.js
+import React, { Component } from 'react';
+import { listRepositories } from './api/github';
+import './App.css';
+
+class App extends Component {
+  ...
+
+  componentDidMount() {
+    listRepositories()
+      .then(data => this.setState({ data }))
+  }
+```
+
 
 
 ## React Hooks

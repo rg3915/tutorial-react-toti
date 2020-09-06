@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { listRepositories } from './api/github';
 import './App.css';
 
 class App extends Component {
@@ -12,10 +12,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://api.github.com/repositories')
-      .then(({ data }) => {
-        this.setState({ data })
-      })
+    listRepositories()
+      .then(data => this.setState({ data }))
   }
 
   render() {
