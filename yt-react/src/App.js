@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class MyButton extends Component {
+  render() {
+    return (
+      <button
+        onClick={() => { this.props.handleClick(this.props.label) }}
+      >
+        { this.props.label }
+      </button>
+    )
+  }
+}
+
+class MyLabel extends Component {
+  render() {
+    return <p>{ this.props.text }</p>
+  }
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      labelText: '',
+    };
+  }
+
+  setLabelText = (labelText) => {
+    // this.setState({ labelText });
+    this.setState({ labelText }, () => {
+      // faça algo
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+          <header className="App-header">
+            <MyLabel text={this.state.labelText} />
+            <MyButton handleClick={this.setLabelText} label="Botão 1" />
+            <MyButton handleClick={this.setLabelText} label="Botão 2" />
+            <MyButton handleClick={this.setLabelText} label="Botão 3" />
+            <MyButton handleClick={this.setLabelText} label="Botão 4" />
+          </header>
+        </div>
+    );
+  }
 }
 
 export default App;
