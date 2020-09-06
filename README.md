@@ -375,7 +375,19 @@ import Item from './components/Item';
 que o primeiro tem chaves e o segundo não. No segundo, sempre que tiver um `export default`, daí não precisa de chaves ao importar.
 
 
+### Criando containers
 
+Containers são as páginas, equivalente as *views* do Vue.
+
+```
+mkdir containers
+touch containers/Repositories.jsx
+```
+
+```js
+# containers/Repositories.jsx
+
+```
 
 
 
