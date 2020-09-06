@@ -170,8 +170,39 @@ setLabelText = (labelText) => {
 O bind é um método que define o contexto pra alguma coisa.
 
 * Dentro do Constructor não pode chamar o this.setState()
-* Não jogue props para o state
+* Não jogue props para o state. Ele até funciona, mas o constructor só roda na inicialização, então se você mudar o valor da props, o state não vai mudar.
 
+
+
+Não é legal usar *arrow function* dentro do constructor, então usamos `bind`.
+
+Antes:
+
+```js
+  setLabelText = (labelText) => {
+    this.setState({ labelText }, () => {
+      // faça algo
+    });
+  }
+```
+
+Depois
+
+```js
+constructor(props) {
+  super(props);
+
+  this.state = {
+    labelText: '',
+  };
+
+  this.setLabelText = this.setLabelText.bind(this);  // <--- aqui
+}
+
+setLabelText(labelText) {
+  this.setState({ labelText });  // <--- aqui
+}
+```
 
 ### Render
 

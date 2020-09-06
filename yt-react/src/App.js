@@ -26,13 +26,12 @@ class App extends Component {
     this.state = {
       labelText: '',
     };
+
+    this.setLabelText = this.setLabelText.bind(this);
   }
 
-  setLabelText = (labelText) => {
-    // this.setState({ labelText });
-    this.setState({ labelText }, () => {
-      // faça algo
-    });
+  setLabelText(labelText) {
+    this.setState({ labelText });
   }
 
   render() {
