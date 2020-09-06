@@ -386,8 +386,59 @@ touch containers/Repositories.jsx
 
 ```js
 # containers/Repositories.jsx
+import React, { Component } from 'react';
 
+import { listRepositories } from '../api/github'
+import Item from '../components/Item'
+
+class Repositories extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: []
+    }
+  }
+
+  componentDidMount() {
+    listRepositories()
+      .then(data => this.setState({ data }))
+  }
+
+  render() {
+    const { data } = this.state
+
+    return (
+      <ul>
+        {data.map(item => <Item key={item.id} {...item} />)}
+      </ul>
+    );
+  }
+}
+export default Repositories;
 ```
+
+```js
+#App.js
+import React, { Component } from 'react';
+import './App.css';
+
+import Repositories from './containers/Repositories';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Repositories />
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+
 
 
 
