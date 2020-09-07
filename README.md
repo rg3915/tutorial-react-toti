@@ -4,6 +4,8 @@ Anotações do Tutorial de ReactJS do Guilherme Toti no YouTube.
 
 https://www.youtube.com/watch?v=ghEdUzwRsHo&list=PLe4SO60BV_r0hkjGFaGcmHCtmD5EUzDxM
 
+https://github.com/guilherme-toti/YT-React-Tutorial
+
 ## Instalação
 
 ```
@@ -257,7 +259,7 @@ npm install axios
 ```
 
 ```js
-#App.js
+# App.js
 
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -351,7 +353,7 @@ export default Item
 ```
 
 ```js
-#App.js
+# App.js
 
 import Item from './components/Item';
 
@@ -419,7 +421,7 @@ export default Repositories;
 ```
 
 ```js
-#App.js
+# App.js
 import React, { Component } from 'react';
 import './App.css';
 
@@ -440,9 +442,6 @@ export default App;
 
 
 
-
-
-
 ## React Hooks
 
 V16
@@ -460,12 +459,83 @@ Basicamente faz tudo via componentes, via funções.
 É equivalente ao `componentDidMount`.
 
 
+```js
+# Repositories.jsx
+import React, { useState, useEffect } from 'react';
+
+import { listRepositories } from '../api/github'
+import Item from '../components/Item'
+
+function Repositories() {
+  // data: []
+  const [data, setData] = useState([]);
+  // const [usuario, setUsuario] = useState('');
+
+  // useEffect é equivalente ao componentDidMount.
+  useEffect(() => {
+    listRepositories()
+      .then(data => {
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <ul>
+      {data.map(item => <Item key={item.id} {...item} />)}
+    </ul>
+  );
+}
+export default Repositories;
+```
+
 
 ## React Router
 
 ```
 npm install react-router-dom
 ```
+
+```js
+# github.js
+...
+export const getRepository = (owner, name) => axios
+  .get(`https://api.github.com/repos/${owner}/${name}`)
+  .then(({ data }) => data)
+```
+
+
+```
+touch containers/Repository.jsx
+```
+
+```js
+# Repository.jsx
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { getRepository } from '../api/github';
+
+function Repository() {
+  const [repository, setRepository] = useState({});
+  let history = useHistory();
+  const { owner, name } = useParams();
+
+  useEffect(() => {
+    getRepository(owner, name)
+      .then(data => setRepository(data));
+  }, [])
+  
+  return (
+    <>
+      <button onClick={() => history.goBack()}>Voltar</button>
+      <h1>{repository.name}</h1>
+    </>
+  );
+}
+
+export default Repository
+```
+
 
 
 #### useParams
